@@ -83,3 +83,6 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
+
+# TMDB Key
+app/src/main/res/values/string_tmdb_apikey.xml
