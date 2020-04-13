@@ -2,17 +2,22 @@ package br.com.wsilva.popularmovies.rest;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 
 import br.com.wsilva.popularmovies.R;
 import br.com.wsilva.popularmovies.model.TmdbResultDTO;
 
 public class ApiTmdbAsyncTask extends AsyncTask<MovieBy, TmdbResultDTO, TmdbResultDTO> {
 
-    Context context;
+    public interface ApiResult {
+        void onResult(TmdbResultDTO tmdbResultDTO);
+    }
 
-    public ApiTmdbAsyncTask(Context context) {
+    Context context;
+    ApiResult listener;
+
+    public ApiTmdbAsyncTask(Context context, ApiResult listener) {
         this.context = context;
+        this.listener = listener;
     }
 
     @Override
@@ -30,10 +35,10 @@ public class ApiTmdbAsyncTask extends AsyncTask<MovieBy, TmdbResultDTO, TmdbResu
 
     @Override
     protected void onPostExecute(TmdbResultDTO tmdbResultDTO) {
-        if (tmdbResultDTO != null) {
-            Log.d("###", String.valueOf(tmdbResultDTO.getTotalResults()));
+        if (this.listener != null) {
+            this.listener.onResult(tmdbResultDTO);
         } else {
-            Log.d("###", "No data");
+            this.listener.onResult(new TmdbResultDTO());
         }
     }
 }
