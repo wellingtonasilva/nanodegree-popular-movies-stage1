@@ -1,8 +1,9 @@
 package br.com.wsilva.popularmovies.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TmdbMovieDTO {
+public class TmdbMovieDTO implements Serializable {
     String posterPath;
     boolean adult;
     String overview;

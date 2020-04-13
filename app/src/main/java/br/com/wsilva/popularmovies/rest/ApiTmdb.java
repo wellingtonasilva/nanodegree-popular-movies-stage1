@@ -43,6 +43,15 @@ public final class ApiTmdb {
     }
 
     public TmdbResultDTO getMoviePopular() {
+        // Parameter to send to service
+        Map<String, String> query = new HashMap<>();
+        query.put(QUERY_PARAMETER_KEY, apiKey);
+
+        String result = NetworkUtil.getResponseFromHttpUrl(NetworkUtil.URL_TMDB_POPULAR, query);
+        if (result != null && !result.equals("")) {
+            return from(result);
+        }
+
         return null;
     }
 
