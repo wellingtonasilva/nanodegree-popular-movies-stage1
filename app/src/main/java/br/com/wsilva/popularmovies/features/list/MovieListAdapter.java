@@ -22,8 +22,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         void onMovieItemClick(TmdbMovieDTO movie);
     }
 
-    List<TmdbMovieDTO> movies;
-    MovieIemClickListener listener;
+    private final List<TmdbMovieDTO> movies;
+    private final MovieIemClickListener listener;
 
     public MovieListAdapter(List<TmdbMovieDTO> movies, MovieIemClickListener listener) {
         this.movies = movies;
@@ -55,7 +55,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     public class MovieListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        ImageView imageView;
+        private ImageView imageView;
 
         public MovieListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -63,7 +63,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             itemView.setOnClickListener(this::onClick);
         }
 
-        public void bind(TmdbMovieDTO movie) {
+        private void bind(TmdbMovieDTO movie) {
             Picasso.get()
                     .load(NetworkUtil.URL_TMDB_IMAGE + movie.getPosterPath())
                     .placeholder(R.drawable.ic_image_grey)

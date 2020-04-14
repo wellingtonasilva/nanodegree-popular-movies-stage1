@@ -1,7 +1,6 @@
 package br.com.wsilva.popularmovies.features.list;
 
 import android.content.Intent;
-import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,11 +21,10 @@ import br.com.wsilva.popularmovies.rest.MovieBy;
 public class MovieListActivity extends AppCompatActivity implements ApiTmdbAsyncTask.ApiResult {
 
     public static final String KEY_MOVIE = "KEY_MOVIE";
-    public static final String KEY_SORT_BY = "KEY_SORT_BY";
+    private static final String KEY_SORT_BY = "KEY_SORT_BY";
     private static final int NUM_OF_COLUMNS = 2;
-    RecyclerView recyclerView;
-    MovieListAdapter movieListAdapter;
-    MovieBy selectedSortBy;
+    private RecyclerView recyclerView;
+    private MovieBy selectedSortBy;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +47,7 @@ public class MovieListActivity extends AppCompatActivity implements ApiTmdbAsync
     protected void onResume() {
         super.onResume();
         // Load information from the TMDB Service
-        new ApiTmdbAsyncTask(MovieListActivity.this, this::onResult).execute(selectedSortBy);
+        loadMovie(selectedSortBy);
     }
 
     @Override
@@ -82,16 +80,15 @@ public class MovieListActivity extends AppCompatActivity implements ApiTmdbAsync
     @Override
     public void onResult(TmdbResultDTO tmdbResultDTO) {
         if (tmdbResultDTO != null) {
-            movieListAdapter = new MovieListAdapter(tmdbResultDTO.getResults(), (item) -> {
-                showDetail(item);
-            });
+            MovieListAdapter movieListAdapter = new MovieListAdapter(tmdbResultDTO.getResults(), this::showDetail);
             recyclerView.setAdapter(movieListAdapter);
         }
     }
 
     private void loadMovie(MovieBy movieBy) {
         // Load information from the TMDB Service
-        new ApiTmdbAsyncTask(MovieListActivity.this, this::onResult).execute(movieBy);
+        new ApiTmdbAsyncTask(getResources().getString(R.string.app_tmdb_api_key),
+                this::onResult).execute(movieBy);
     }
 
     private void showDetail(TmdbMovieDTO movie) {

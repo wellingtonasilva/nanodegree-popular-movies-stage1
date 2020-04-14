@@ -27,7 +27,7 @@ public class NetworkUtil {
         return null;
     }
 
-    public static String getResponseFromHttpUrl(URL url) throws IOException {
+    private static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         try {
             InputStream in = connection.getInputStream();

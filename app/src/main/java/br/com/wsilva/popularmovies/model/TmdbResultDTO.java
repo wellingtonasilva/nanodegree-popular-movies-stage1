@@ -5,10 +5,10 @@ import java.util.List;
 
 public class TmdbResultDTO {
 
-    int page;
-    int totalResults;
-    int totalPages;
-    List<TmdbMovieDTO> results = new ArrayList<>();
+    private int page;
+    private int totalResults;
+    private int totalPages;
+    private List<TmdbMovieDTO> results = new ArrayList<>();
 
     public TmdbResultDTO() {
     }
