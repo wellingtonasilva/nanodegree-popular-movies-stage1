@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         >
 
@@ -17,10 +17,9 @@
             android:id="@+id/iv_backdrop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/iv_backdrop"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:translationZ="90dp"
+            android:contentDescription="@string/app_backdrop_image"
             app:srcCompat="@drawable/ic_backdrop_default" />
 
         <ImageView
@@ -32,7 +31,7 @@
             android:layout_marginBottom="-57dp"
             android:adjustViewBounds="true"
             android:cropToPadding="true"
-            android:translationZ="90dp"
+            android:contentDescription="@string/app_post_movie"
             app:srcCompat="@drawable/ic_poster_default"
             />
 
@@ -42,7 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="-20dp"
-            android:text="2015"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView
@@ -50,7 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
-            android:text="@string/app_most_popular"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
         <TextView
@@ -59,7 +56,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
             android:layout_marginTop="0dp"
-            android:text="99"
             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
         <TextView

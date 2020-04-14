@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import br.com.wsilva.popularmovies.model.TmdbMovieDTO;
 import br.com.wsilva.popularmovies.model.TmdbResultDTO;
 
-public final class ApiTmdb {
+final class ApiTmdb {
 
     private static final String QUERY_PARAMETER_KEY = "api_key";
 
@@ -36,7 +37,7 @@ public final class ApiTmdb {
     private static final String FIELD_VIDEO = "video";
     private static final String FIELD_VOTE_AVERAGE = "vote_average";
 
-    final String apiKey;
+    private final String apiKey;
 
     public ApiTmdb(String apiKey) {
         this.apiKey = apiKey;
@@ -92,9 +93,7 @@ public final class ApiTmdb {
             int length = jsonArray.length();
             for (int index = 0; index < length; index++) {
                 TmdbMovieDTO movie = convertToMovieDTO(jsonArray.optJSONObject(index));
-                if (movie != null) {
-                    list.add(movie);
-                }
+                list.add(movie);
             }
         }
 
@@ -116,7 +115,7 @@ public final class ApiTmdb {
         movie.setVoteCount(jsonObject.optInt(FIELD_VOTE_COUNT));
         movie.setVideo(jsonObject.optBoolean(FIELD_VIDEO));
         movie.setVoteAverage(jsonObject.optDouble(FIELD_VOTE_AVERAGE));
-        movie.setGenreIds(genIdsFromJsonArray(jsonObject.optJSONArray(FIELD_GENRE_IDS)));
+        movie.setGenreIds(genIdsFromJsonArray(Objects.requireNonNull(jsonObject.optJSONArray(FIELD_GENRE_IDS))));
 
         return movie;
     }

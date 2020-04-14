@@ -11,6 +11,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Objects;
+
 import br.com.wsilva.popularmovies.R;
 import br.com.wsilva.popularmovies.features.list.MovieListActivity;
 import br.com.wsilva.popularmovies.model.TmdbMovieDTO;
@@ -18,13 +20,13 @@ import br.com.wsilva.popularmovies.rest.NetworkUtil;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    TmdbMovieDTO movie;
-    ImageView backdrop;
-    ImageView movie_poster;
-    TextView release_date;
-    TextView title;
-    TextView synopsis;
-    TextView votes;
+    private TmdbMovieDTO movie;
+    private ImageView backdrop;
+    private ImageView movie_poster;
+    private TextView release_date;
+    private TextView title;
+    private TextView synopsis;
+    private TextView votes;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -41,10 +43,10 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             movie = (TmdbMovieDTO) savedInstanceState.getSerializable(MovieListActivity.KEY_MOVIE);
         } else {
-            movie = (TmdbMovieDTO) getIntent().getExtras().getSerializable(MovieListActivity.KEY_MOVIE);
+            movie = (TmdbMovieDTO) Objects.requireNonNull(getIntent().getExtras()).getSerializable(MovieListActivity.KEY_MOVIE);
         }
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         updateUI(movie);
     }
 
@@ -56,12 +58,10 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default: return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home){
+            onBackPressed();
         }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateUI(TmdbMovieDTO movie) {
