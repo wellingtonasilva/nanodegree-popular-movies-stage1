@@ -2,4 +2,6 @@
     <string name="app_name">Popular Movies</string>
     <string name="app_most_popular">Most Popular</string>
     <string name="app_top_rated">Top Rated</string>
+    <string name="app_release_date">Release Date: %1$s</string>
+    <string name="app_vote_count">Votes: %1$d</string>
 </resources>

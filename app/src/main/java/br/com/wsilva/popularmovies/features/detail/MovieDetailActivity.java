@@ -67,9 +67,9 @@ public class MovieDetailActivity extends AppCompatActivity {
     private void updateUI(TmdbMovieDTO movie) {
         Picasso.get().load(NetworkUtil.URL_TMDB_IMAGE + movie.getBackdropPath()).into(backdrop);
         Picasso.get().load(NetworkUtil.URL_TMDB_BACKDROP_IMAGE + movie.getPosterPath()).into(movie_poster);
-        release_date.setText(movie.getReleaseDate());
+        release_date.setText(getString(R.string.app_release_date, movie.getReleaseDate()));
         title.setText(movie.getTitle());
         synopsis.setText(movie.getOverview());
-        votes.setText(String.valueOf(movie.getVoteCount()));
+        votes.setText(getString(R.string.app_vote_count, movie.getVoteCount()));
     }
 }
