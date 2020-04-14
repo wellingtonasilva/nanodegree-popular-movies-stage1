@@ -1,6 +1,7 @@
 package br.com.wsilva.popularmovies.features.detail;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,6 +24,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView release_date;
     TextView title;
     TextView synopsis;
+    TextView votes;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         release_date = findViewById(R.id.tv_release_date);
         title = findViewById(R.id.tv_title);
         synopsis = findViewById(R.id.tv_synopsis);
+        votes = findViewById(R.id.tv_votes);
 
         if (savedInstanceState != null) {
             movie = (TmdbMovieDTO) savedInstanceState.getSerializable(MovieListActivity.KEY_MOVIE);
@@ -41,6 +44,7 @@ public class MovieDetailActivity extends AppCompatActivity {
             movie = (TmdbMovieDTO) getIntent().getExtras().getSerializable(MovieListActivity.KEY_MOVIE);
         }
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         updateUI(movie);
     }
 
@@ -50,11 +54,22 @@ public class MovieDetailActivity extends AppCompatActivity {
         outState.putSerializable(MovieListActivity.KEY_MOVIE, movie);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default: return super.onOptionsItemSelected(item);
+        }
+    }
+
     private void updateUI(TmdbMovieDTO movie) {
         Picasso.get().load(NetworkUtil.URL_TMDB_IMAGE + movie.getBackdropPath()).into(backdrop);
         Picasso.get().load(NetworkUtil.URL_TMDB_BACKDROP_IMAGE + movie.getPosterPath()).into(movie_poster);
         release_date.setText(movie.getReleaseDate());
         title.setText(movie.getTitle());
         synopsis.setText(movie.getOverview());
+        votes.setText(String.valueOf(movie.getVoteCount()));
     }
 }

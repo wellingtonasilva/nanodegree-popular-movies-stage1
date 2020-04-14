@@ -1,6 +1,7 @@
 package br.com.wsilva.popularmovies.features.list;
 
 import android.content.Intent;
+import android.graphics.Movie;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,6 +22,7 @@ import br.com.wsilva.popularmovies.rest.MovieBy;
 public class MovieListActivity extends AppCompatActivity implements ApiTmdbAsyncTask.ApiResult {
 
     public static final String KEY_MOVIE = "KEY_MOVIE";
+    public static final String KEY_SORT_BY = "KEY_SORT_BY";
     private static final int NUM_OF_COLUMNS = 2;
     RecyclerView recyclerView;
     MovieListAdapter movieListAdapter;
@@ -36,9 +38,24 @@ public class MovieListActivity extends AppCompatActivity implements ApiTmdbAsync
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        // Load information from the TMDB Service
+        // Default
         selectedSortBy = MovieBy.POPULAR;
+        if (savedInstanceState != null) {
+            selectedSortBy = (MovieBy) savedInstanceState.getSerializable(KEY_SORT_BY);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Load information from the TMDB Service
         new ApiTmdbAsyncTask(MovieListActivity.this, this::onResult).execute(selectedSortBy);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable(KEY_SORT_BY, selectedSortBy);
     }
 
     @Override
